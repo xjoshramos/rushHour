@@ -20,17 +20,18 @@ class TrackRushHour {
 
 		TrackRushHour();
 		void Init();
-		bool IsRushHour(float time);
-		void AddTimeSpan(float timeLower, float timeUpper);    
+		bool IsRushHour(double time);
+		bool IsRushHour(int time);
+		void AddTimeSpan(int timeLower, int timeUpper);
+		void AddTimeSpan(double timeLower, double timeUpper);    
 	private:
-
-		int convertToSec(float time);
+		int convertToSec(double time);
 
 
 
 };
 
-int TrackRushHour::convertToSec( float time){
+int TrackRushHour::convertToSec( double time){
 	
 	// assert time frame given is correct in time of day
 	if (time < 0 || time > 24){
@@ -64,7 +65,7 @@ TrackRushHour::TrackRushHour(){
 
 }
 
-bool TrackRushHour::IsRushHour( float time ){
+bool TrackRushHour::IsRushHour( double time ){
 	
 	int sec = convertToSec(time);
 	bool rushHourCheck = rushHoursArr[ sec ];
@@ -79,9 +80,22 @@ bool TrackRushHour::IsRushHour( float time ){
 	
 };
 
+bool TrackRushHour::IsRushHour( int sec ){
+
+        bool rushHourCheck = rushHoursArr[ sec ];
+
+        if (rushHourCheck == 0){
+                cout <<"FALSE"<<endl;
+                return false;
+        }else{
+                cout <<"TRUE"<<endl;
+                return true;
+        }
+
+};
 
 
-void TrackRushHour::AddTimeSpan( float timeLower, float timeUpper ){
+void TrackRushHour::AddTimeSpan( double timeLower, double timeUpper ){
 	if ( timeLower > timeUpper){
                 cout << "ERROR incorrect time span must first argument must be lower than second" << endl;
                 assert( timeLower <= timeUpper );
@@ -107,6 +121,30 @@ void TrackRushHour::AddTimeSpan( float timeLower, float timeUpper ){
 
 };
 
+
+void TrackRushHour::AddTimeSpan( int secLower, int secUpper ){
+        if ( secLower > secUpper){
+                cout << "ERROR incorrect time span must first argument must be lower than second" << endl;
+                assert( secLower <= secUpper );
+        }
+
+        if (secLower < 0 || secLower > secsInDay || secUpper < 0 || secUpper > secsInDay){
+                cout << "ERROR incorrect floating time must be between (0.00,24.00)" << endl;
+                assert( secLower >= 0 && secLower <= secsInDay && secUpper <= secsInDay && secUpper >= 0);
+
+        }
+
+
+        if( secLower == secUpper ){
+                rushHoursArr[secLower] = true;
+        }
+
+        for ( int i = secLower; i <= secUpper; i++){
+
+                rushHoursArr[i] = true;
+        }
+
+};
 
 void TrackRushHour::Init(){
 
