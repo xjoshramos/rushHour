@@ -156,11 +156,11 @@ int main(int argc, char** argv )
 {
     TrackRushHour rushHours;
     rushHours.Init();
-    rushHours.IsRushHour(3.00);
-    rushHours.IsRushHour(5.00);
+    rushHours.IsRushHour(10800);
+    rushHours.IsRushHour(18000);
     
     rushHours.AddTimeSpan(2.00,4.00);
-    rushHours.IsRushHour(3.00);
+    rushHours.IsRushHour(10800);
     rushHours.IsRushHour(5.00);
 	
     rushHours.AddTimeSpan(7.00,9.00);
