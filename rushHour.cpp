@@ -1,35 +1,10 @@
 #include <stdio.h>
 #include <assert.h>
 #include <opencv2/opencv.hpp>
-
+#include "rushHour.hpp"
 using namespace std;
 
 
-class TrackRushHour {
-	
-	static const int secsInDay = 86400;
-	static const int secsInHr  = 60*60;
-	static const int secsInMin = 60;
-	static const int minsInHr  = 60;
-
-	//bool rushHoursArr[ secsInDay ] = {0};
-	bool *rushHoursArr = new bool[secsInDay];
-
-	public:
-		//const int secsInDay = 86400;
-
-		TrackRushHour();
-		void Init();
-		bool IsRushHour(double time);
-		bool IsRushHour(int time);
-		void AddTimeSpan(int timeLower, int timeUpper);
-		void AddTimeSpan(double timeLower, double timeUpper);    
-	private:
-		int convertToSec(double time);
-
-
-
-};
 
 int TrackRushHour::convertToSec( double time){
 	
@@ -110,12 +85,9 @@ void TrackRushHour::AddTimeSpan( double timeLower, double timeUpper ){
 
 	int secLower = convertToSec(timeLower); 
 	int secUpper = convertToSec(timeUpper);
-	if( secLower == secUpper ){
-		rushHoursArr[secLower] = true;
-	}
 	
 	for ( int i = secLower; i <= secUpper; i++){
-
+		if (rushHoursArr[i] == 1) continue;
 		rushHoursArr[i] = true;
 	}
 
@@ -135,12 +107,9 @@ void TrackRushHour::AddTimeSpan( int secLower, int secUpper ){
         }
 
 
-        if( secLower == secUpper ){
-                rushHoursArr[secLower] = true;
-        }
 
         for ( int i = secLower; i <= secUpper; i++){
-
+		if (rushHoursArr[i] == 1) continue;
                 rushHoursArr[i] = true;
         }
 
